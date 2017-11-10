@@ -11,13 +11,16 @@ namespace ExplorandoMarte
         static void Main(string[] args)
         {
             string command = string.Empty;
-            do
-            {
-                //Entrada de dados
+            //Coordenada do ponto superior-direito 
+            int pontoxSD = 5;
+            int pontoySD = 5;
 
-                //Coordenada do ponto superior-direito 
-                int pontoxSD = 5;
-                int pontoySD = 5;
+            Console.Write("Digite o ponto x superior-direito: ");
+            pontoxSD = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Digite o ponto y superior-direito: ");
+            pontoySD = Convert.ToInt32(Console.ReadLine());
+            do
+            {                          
 
                 int pontoxAtual = 0, pontoyAtual = 0;
                 char direcaoAtual = 'N';
@@ -32,7 +35,7 @@ namespace ExplorandoMarte
                 Console.Write("Digite seu comando: ");
                 comando = Console.ReadLine().ToUpper();
 
-                RecebeComando(comando, pontoxAtual, pontoyAtual, direcaoAtual);
+                RecebeComando(comando, pontoxAtual, pontoyAtual, direcaoAtual,pontoxSD, pontoySD);
 
                 Console.Write("\nDigite exit para sair, ou aperte enter para adicionar uma nova sonda.");
                 command = Console.ReadLine().ToLower();
@@ -42,7 +45,7 @@ namespace ExplorandoMarte
         }
 
 
-        private static void RecebeComando(string comando, int pontoxAtual, int pontoyAtual, char direcaoAtual)
+        private static void RecebeComando(string comando, int pontoxAtual, int pontoyAtual, char direcaoAtual, int pontoxSD, int pontoySD)
         {
             char comandoAtual = 'A';
             for (int i = 0; i < comando.Length; i++)
@@ -120,8 +123,21 @@ namespace ExplorandoMarte
                     }
                 }
 
+                //VERIFICAÇÃO DO TAMANHO DA MALHA. O ponto atual será a coordenada do ponto-superior direito.
+                if(pontoxAtual > pontoxSD)
+                {
+                    Console.Write("Ponto x foi extrapolado.\n");
+                    pontoxAtual = pontoxSD;
+                }
+                if (pontoyAtual > pontoySD)
+                {
+                    Console.Write("Ponto y foi extrapolado.\n");
+                    pontoyAtual = pontoySD;
+                }
+
             }
-            
+
+          
             string coordenada = '(' + pontoxAtual.ToString() + ' ' + pontoyAtual.ToString() + ' '+ direcaoAtual.ToString() + ')';
 
             Console.Write(coordenada);
